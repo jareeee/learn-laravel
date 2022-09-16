@@ -39,7 +39,8 @@
       @enderror
     </div>
 
-    <button class="w-100 btn btn-lg btn-dark" type="submit">Sign in</button>
+    <a href="{{ route('password.request') }}" class="">Forgot password?</a>
+    <button class="w-100 mt-2 btn btn-lg btn-dark" type="submit">Sign in</button>
 
     <small class="d-block mt-2 ">Don't have account? <a href="/register">Register</a></small>
   </form>

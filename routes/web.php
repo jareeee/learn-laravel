@@ -6,8 +6,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ForgotPassController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\ResetPasswordController;
 
 
 
@@ -22,6 +24,7 @@ use App\Http\Controllers\DashboardPostController;
 |
 */
 
+#index 
 Route::get('/', function () {
     return view('index.home', [
         'title' => 'home',
@@ -35,30 +38,29 @@ Route::get('/about', function () {
         'title' => 'about'
     ]);
 });
-
 Route::get('/galeries', [CategoryController::class, 'index']);
-
 Route::get('/galeries/{category}', [GaleryController::class, 'show']);
 
-
-
+#login and register users
+#get
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-
-Route::post('/login', [LoginController::class, 'auth']);
-Route::post('/logout', [LoginController::class, 'logout']);
-
 Route::get('/register', [RegisterController::class, 'index']);
 
+#post
+Route::post('/login', [LoginController::class, 'auth']);
+Route::post('/logout', [LoginController::class, 'logout']);
 Route::post('/register', [RegisterController::class, 'store']);
 
+
+
+#dashboard
 Route::get('/dashboard', function(){
     return view('dashboard.index', [
         'title' => 'Dashboard'
     ]);
 })->middleware('auth');
-
 Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('auth');
-
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
 
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
+
